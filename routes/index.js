@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../helpers/error');
 const {
     saveMetric,
     getMetricsSumByKey,
@@ -15,8 +16,8 @@ module.exports = app => {
             const metrics = await getMetricsByKey(key);
 
             return res.status(200).json(metrics);
-        } catch (error) {
-            return next(error);
+        } catch ({ message }) {
+            return next(new ErrorHandler(400, message));
         }
     });
 
@@ -30,8 +31,8 @@ module.exports = app => {
             const value = await getMetricsSumByKey(key);
 
             return res.status(200).json({ value });
-        } catch (error) {
-            return res.status(500).json({ error });
+        } catch ({ message }) {
+            return next(new ErrorHandler(400, message));
         }
     });
 
@@ -44,14 +45,14 @@ module.exports = app => {
             const value = parseFloat(req.body.value);
 
             if (!value) {
-                throw new Error('Incorrect value type! Please provide an integer!');
+                throw new ErrorHandler(400, 'Incorrect value type! Please provide an integer!');
             }
 
             await saveMetric(key, value);
 
             return res.status(200).json({});
         } catch (error) {
-            return res.status(500).json({ error: error.message });
+            return next(error);
         }
     });
 };

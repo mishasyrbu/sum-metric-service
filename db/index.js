@@ -1,4 +1,5 @@
 const { METRIC_LIFETIME } = require('../config/constants');
+const logger = require('../logger');
 
 /**
  * Functions are async to simulate DB async response
@@ -25,7 +26,13 @@ const saveMetric = async (key, value) => {
     metrics[key].push({ value: Math.round(value), timestamp: now });
 };
 
-const getMetricsByKey = (key) => metrics[key];
+const getMetricsByKey = (key) => {
+    if (metrics[key]) {
+        return metrics[key];
+    }
+
+    throw new Error('Invalid key!');
+};
 
 /**
  * Get sum of all metrics
@@ -33,11 +40,15 @@ const getMetricsByKey = (key) => metrics[key];
  * @param key
  * @returns {number}
  */
-const getMetricsSumByKey = (key) => metrics[key].reduce((sum, { value }) => {
-    sum += value;
+const getMetricsSumByKey = (key) => {
+    const metricsByKey = getMetricsByKey(key);
 
-    return sum;
-}, 0);
+    return metricsByKey.reduce((sum, { value }) => {
+        sum += value;
+
+        return sum;
+    }, 0);
+};
 
 /**
  * Remove outdated metrics
@@ -48,7 +59,7 @@ const removeOutdatedMetricsCron = async () => {
     }
 
     const now = getNow();
-    console.log('LOG:', 'Clean metrics task run');
+    logger.success('Clean metrics task run');
 
     for (const key in metrics) {
         metrics[key] = metrics[key].filter(({ timestamp }) => now - timestamp < METRIC_LIFETIME);

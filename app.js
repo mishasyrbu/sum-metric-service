@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const { PORT } = require('./config/constants');
+
+const logger = require('./logger');
+const { handleError } = require('./helpers/error');
+const { PORT, HOST } = require('./config/constants');
 const { removeOutdatedMetricsCron } = require('./db');
 const app = express();
 
@@ -13,7 +16,11 @@ app.use(morgan(':date[iso] - notice: :remote-addr ":method :url" :status :res[co
 
 require('./routes')(app);
 
-app.listen(PORT, () => {
+app.use((err, req, res, next) => {
+    handleError(err, res);
+});
+
+app.listen(PORT, HOST, () => {
+    logger.appStarted(PORT, HOST);
     removeOutdatedMetricsCron(); // clean metrics cron task
-    console.log(`Server running on port ${PORT}`);
 });
