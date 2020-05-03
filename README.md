@@ -12,15 +12,15 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the server on http://localhost:8000/ by default.
+Runs the server on http://localhost:8000 by default.
 
 Available env variables:
 
-`PORT` - define a specific port
+`PORT` - define a specific port (Default: 8000)
 
-`HOST` - define a specific host
+`HOST` - define a specific host (Default: localhost)
 
-`METRIC_LIFETIME` - define a specific metric lifetime, by default is set to 1 hour.
+`METRIC_LIFETIME` - define a specific metric lifetime in seconds  (Default: 3600)
 
 ### Test API
 
