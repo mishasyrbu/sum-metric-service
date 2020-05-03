@@ -19,8 +19,9 @@ const logger = {
     },
 
     // Called when express.js app starts on given port w/o errors
-    appStarted: (port, host) => {
+    appStarted: (port, host, metricLifetime) => {
         console.log(`Server started ! ${chalk.green('✓')}`);
+        console.log(`Metric lifetime is ${metricLifetime} seconds`);
         console.log(`
         ${chalk.bold('Access URLs:')}${divider}
         Localhost: ${chalk.magenta(`http://${host}:${port}`)}
