@@ -5,7 +5,9 @@ const path = require('path');
 
 const logger = require('./logger');
 const { handleError } = require('./helpers/error');
-const { PORT, HOST, METRIC_LIFETIME } = require('./config/constants');
+const { HOST } = require('./config/constants');
+const PORT = process.env.PORT || 5000;
+const METRIC_LIFETIME = process.env.METRIC_LIFETIME || 300;
 const { removeOutdatedMetricsCron } = require('./db');
 const app = express();
 
