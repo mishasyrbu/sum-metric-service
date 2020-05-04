@@ -4,7 +4,7 @@
   "description": "Sum Metric Service",
   "main": "app.js",
   "scripts": {
-    "start": "METRIC_LIFETIME=300 nodemon app.js",
+    "start": "METRIC_LIFETIME=300 node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mihail Sirbu",
