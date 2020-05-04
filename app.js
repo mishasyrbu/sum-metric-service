@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
     handleError(err, res);
 });
 
-app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
     logger.appStarted(PORT, HOST, METRIC_LIFETIME);
     removeOutdatedMetricsCron(); // clean metrics cron task
 });
