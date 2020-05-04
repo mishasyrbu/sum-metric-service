@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const path = require('path');
 
 const logger = require('./logger');
 const { handleError } = require('./helpers/error');
