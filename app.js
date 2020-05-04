@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan(':date[iso] - notice: :remote-addr ":method :url" :req[X-Request-Id]', { immediate: true }));
 app.use(morgan(':date[iso] - notice: :remote-addr ":method :url" :status :res[content-length] :res[X-Request-Id]'));
 
+app.get('*', function(req, res){
+    res.status(200).json({});
+});
+
 require('./routes')(app);
 
 app.use((err, req, res, next) => {
