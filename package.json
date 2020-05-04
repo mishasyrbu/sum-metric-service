@@ -14,9 +14,12 @@
     "chalk": "^4.0.0",
     "express": "^4.17.1",
     "ip": "^1.1.5",
+    "ejs": "^2.5.6",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.7.0",
     "nodemon": "^2.0.3"
   },
   "engines": {
